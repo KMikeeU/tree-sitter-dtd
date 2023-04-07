@@ -1,10 +1,7 @@
-# tree-sitter-xml
-XML Grammar for [tree-sitter](https://github.com/tree-sitter/tree-sitter) forked
-from [dorgnarg/tree-sitter-xml](https://github.com/dorgnarg/tree-sitter-xml).
+# tree-sitter-dtd
+DTD Grammar for [tree-sitter](https://github.com/tree-sitter/tree-sitter)
+based on subset of XML tree-sitter [RenjiSann/tree-sitter-xml](https://github.com/RenjiSann/tree-sitter-xml)
+forked from [dorgnarg/tree-sitter-xml](https://github.com/dorgnarg/tree-sitter-xml).
 
-This fork brings **highlight**ing for the existing grammar. It also fixes errors
-in the grammar (typos in rules, confusion with `\s` and `\s+`).
-
-Example files come from W3C samples, [generated data](www.generatedata.com),
-and [wikimedia dumps](https://dumps.wikimedia.org/).
-
+This fork takes only the DTD subset of the XML grammar
+to make it work in standalone environments.
