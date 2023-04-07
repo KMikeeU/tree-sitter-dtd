@@ -107,3 +107,4 @@ dist
 
 highlight_test.html
 /target/
+build/

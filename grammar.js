@@ -3,14 +3,15 @@ const in_quotes = (rule) => choice(seq("'", rule, "'"), seq('"', rule, '"'));
 const S = /[ \t\r\n]+/;
 
 module.exports = grammar({
-  name: "xml",
+  name: "dtd",
 
   extras: ($) => [],
 
   inline: ($) => [$._eq],
 
   rules: {
-    document: ($) => seq(repeat($.prolog), repeat($.element), repeat($._misc)),
+    document: ($) =>
+      repeat(choice($._markup_decl, $.pe_reference, S)),
 
     /** Names and Tokens **/
 
@@ -48,19 +49,19 @@ module.exports = grammar({
 
     entity_value: ($) =>
       choice(('"', repeat(choice(/[^<&"]/, $.pe_reference, $.reference)), '"'),
-      ("'", repeat(choice(/[^<&']/, $.pe_reference, $.reference)), "'")),
+        ("'", repeat(choice(/[^<&']/, $.pe_reference, $.reference)), "'")),
 
     attribute_value: ($) => choice(
-      seq('"',repeat(choice(/[^<&"]/, $.reference)), '"'),
+      seq('"', repeat(choice(/[^<&"]/, $.reference)), '"'),
       seq("'", repeat(choice(/[^<&']/, $.reference)), "'")
     ),
 
-    system_literal: ($) => choice(seq('"',/[^"]*/, '"'), seq("'", /[^']/, "'")),
+    system_literal: ($) => choice(seq('"', /[^"]*/, '"'), seq("'", /[^']/, "'")),
 
     pubid_literal: ($) => choice(
-      seq( '"', repeat(choice($.pubid_char, "'")), '"'),
-      seq( "'", repeat($.pubid_char), "'")
-      ),
+      seq('"', repeat(choice($.pubid_char, "'")), '"'),
+      seq("'", repeat($.pubid_char), "'")
+    ),
 
     pubid_char: ($) => /[ \r\n\ta-zA-Z0-9-()+,./:=?;!*#@$_%]/,
 
@@ -80,68 +81,13 @@ module.exports = grammar({
 
     pi_target: ($) => $._name, // This should exclude [Xx][Mm][Ll] eventually too
 
-    /** CDATA Sections **/
-
-    cdata_sect: ($) => seq($._cdata_start, $.cdata, $._cdata_end),
-
-    _cdata_start: ($) => seq("<![", "CDATA", "["),
-
-    cdata: ($) => /./,
-
-    _cdata_end: ($) => seq("]]>"),
 
     /** Prolog **/
 
-    prolog: ($) =>
-      prec.right(
-        choice(
-          seq($.xml_decl, optional($._misc)),
-          seq($.xml_decl, optional($._misc), $.doctype_decl, optional($._misc)),
-          seq(optional($._misc), $.doctype_decl, optional($._misc))
-        )
-      ),
-
-    xml_decl: ($) =>
-      seq(
-        "<?",
-        "xml",
-        /\s/,
-        $.version_info,
-        optional($.encoding_decl),
-        optional($.standalone_decl),
-        optional(/\s/),
-        "?>"
-      ),
-
-    version_info: ($) =>
-      seq("version", $._eq, alias($._version_num, $.attribute_value)),
-
     _eq: ($) => seq(optional(S), "=", optional(S)),
-
-    _version_num: ($) => in_quotes(seq("1.", /[0-9]+/)),
-
-    _misc: ($) => choice($.comment, $.processing_instructions, S),
 
     /** Document Type Definition **/
 
-    doctype_decl: ($) =>
-      seq(
-        "<!",
-        "DOCTYPE",
-        S,
-        alias($._name, $.doctype),
-        optional(seq(S, $.external_id)),
-        optional(S),
-        optional(
-          seq(
-            "[",
-            repeat(choice($._markup_decl, $.pe_reference, /\s/)),
-            "]",
-            optional(S)
-          )
-        ),
-        ">"
-      ),
 
     _markup_decl: ($) =>
       choice(
@@ -155,57 +101,16 @@ module.exports = grammar({
 
     /** External Subset **/
 
-    external_subset: ($) =>
-      seq(optional($.text_decl), repeat($.external_subset_decl)),
-
-    external_subset_decl: ($) =>
-      choice($._markup_decl, $.conditional_sect, $.pe_reference),
-
     /** Standalone Document Declaration **/
 
-    standalone_decl: ($) =>
-      seq(
-        /\s/,
-        "standalone",
-        $._eq,
-        alias(token(in_quotes(choice("yes", "no"))), $.attribute_value)
-      ),
 
     /** Language Identification **/
 
-    language_id: ($) => seq($.langcode, optional(seq("-", $.sub_code))),
-
-    langcode: ($) => choice($._iso639_code, $._iana_code, $._user_code),
-
-    _iso639_code: ($) =>
-      seq(choice(/[a-z]/, /[A-Z]/), choice(/[a-z]/, /[A-Z]/)),
-
-    _iana_code: ($) =>
-      seq(choice("i", "I"), "-", repeat1(choice(/[a-z]/, /[A-Z]/))),
-
-    _user_code: ($) =>
-      seq(choice("x", "X"), "-", repeat1(choice(/[a-z]/, /[A-Z]/))),
-
-    sub_code: ($) => repeat1(choice(/[a-z]/, /[A-Z]/)),
-
     /** Element **/
 
-    element: ($) =>
-      choice(
-        seq($.start_tag, optional($._content), $.end_tag),
-        $.empty_elem_tag
-      ),
 
     /** Start-tag **/
 
-    start_tag: ($) =>
-      seq(
-        "<",
-        alias($._name, $.tag_name),
-        repeat(seq(/\s/, $.attribute)),
-        optional(/\s/),
-        ">"
-      ),
 
     attribute: ($) =>
       seq(alias($._name, $.attribute_name), $._eq, $.attribute_value),
@@ -223,28 +128,9 @@ module.exports = grammar({
 
     /** Content of Elements **/
 
-    _content: ($) =>
-      repeat1(
-        choice(
-          $.element,
-          $.cdata_sect,
-          alias($._char_data, $.text),
-          $.reference,
-          $.processing_instructions,
-          $.comment
-        )
-      ),
 
     /** Tags for Empty Elements **/
 
-    empty_elem_tag: ($) =>
-      seq(
-        "<",
-        alias($._name, $.tag_name),
-        repeat(seq(/\s/, $.attribute)),
-        optional(/\s/),
-        "/>"
-      ),
 
     /** Element Type Declaration **/
 
@@ -279,20 +165,20 @@ module.exports = grammar({
     element_choice: ($) =>
       seq(
         "(",
-        optional(/\s/),
+        optional(S),
         $.cp,
-        repeat1(seq(optional(/\s/), "|", optional(/\s/), $.cp)),
-        optional(/\s/),
+        repeat1(seq(optional(S), "|", optional(S), $.cp)),
+        optional(S),
         ")"
       ),
 
     element_seq: ($) =>
       seq(
         "(",
-        optional(/\s/),
+        optional(S),
         $.cp,
-        repeat(seq(optional(/\s/), ",", optional(/\s/), $.cp)),
-        optional(/\s/),
+        repeat(seq(optional(S), ",", optional(S), $.cp)),
+        optional(S),
         ")"
       ),
 
@@ -395,43 +281,6 @@ module.exports = grammar({
         seq(optional(seq("#FIXED", optional(/\s/))), $.attribute_value)
       ),
 
-    /** Conditional Section **/
-
-    conditional_sect: ($) => choice($.include_sect, $.ignore_sect),
-
-    include_sect: ($) =>
-      seq(
-        "<!",
-        "[",
-        optional(/\s/),
-        "INCLUDE",
-        optional(/\s/),
-        "[",
-        repeat($.external_subset_decl),
-        "]]",
-        ">"
-      ),
-
-    ignore_sect: ($) =>
-      seq(
-        "<!",
-        "[",
-        optional(/\s/),
-        "IGNORE",
-        optional(/\s/),
-        "[",
-        repeat($.ignore_sect_contents),
-        "]]",
-        ">"
-      ),
-
-    ignore_sect_contents: ($) =>
-      seq(
-        $.ignore,
-        repeat(seq("<!", "[", $.ignore_sect_contents, "]]", ">", $.ignore))
-      ),
-
-    ignore: ($) => /./, // Not technically accurate, but close enough for now
 
     /** Character Reference **/
 
@@ -493,23 +342,6 @@ module.exports = grammar({
 
     ndata_decl: ($) => seq(/\s/, "NDATA", /\s/, alias($._name, $.ndata_name)),
 
-    /** Text Declaration **/
-
-    text_decl: ($) =>
-      seq(
-        "<?",
-        "xml",
-        optional($.version_info),
-        $.encoding_decl,
-        optional(/\s/),
-        "?>"
-      ),
-
-    /** Well-formed External Parsed Entity **/
-
-    external_parsed_ent: ($) => seq(optional($.text_decl), $._content),
-
-    external_pe: ($) => seq(optional($.text_decl), $.external_subset_decl),
 
     /** Encoding Declaration **/
 

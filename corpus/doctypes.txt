@@ -1,33 +1,59 @@
 ================================================================================
 DOCTYPE #1
 ================================================================================
-<!DOCTYPE greeting [
-    <!ELEMENT greeting (#PCDATA)>
-]>
+<!ELEMENT greeting (#PCDATA)>
 --------------------------------------------------------------------------------
 
 (document
-  (prolog
-    (doctype_decl
-      (doctype)
-      (element_decl
-        (element_name)
-        (content_spec
-          (mixed))))))
+  (element_decl
+    (element_name)
+       (content_spec
+          (mixed))))
 
 ================================================================================
 DOCTYPE #2 (extra spaces)
 ================================================================================
-<!DOCTYPE    greeting   [
-  <!ELEMENT  greeting  (#PCDATA) >
-] >
+<!ELEMENT  greeting  (#PCDATA) >
 --------------------------------------------------------------------------------
 
 (document
-  (prolog
-    (doctype_decl
-      (doctype)
+  (element_decl
+    (element_name)
+       (content_spec
+          (mixed))))
+
+===========
+Multiple elements
+===========
+<!ELEMENT  ship  EMPTY  >
+<!ELEMENT tags (tag,tag  )>
+<!ELEMENT tag (#PCDATA, ship)*>
+<!ATTLIST tag tagname CDATA #IMPLIED
+tagdesc NMTOKENS #REQUIRED>
+----------
+(document
+      (element_decl
+        (element_name)
+        (content_spec))
       (element_decl
         (element_name)
         (content_spec
-          (mixed))))))
+          (children
+            (element_seq
+              (cp)
+              (cp)))))
+      (element_decl
+        (element_name)
+        (content_spec
+          (mixed
+            (ERROR))))
+      (attlist_decl
+        (attlist_name)
+        (attribute_def
+          (attribute_name)
+          (attribute_type)
+          (default_decl))
+        (attribute_def
+          (attribute_name)
+          (attribute_type)
+          (default_decl))))

@@ -1,33 +1,31 @@
 {
-  "name": "tree-sitter-xml",
+  "name": "tree-sitter-dtd",
   "version": "0.17.3",
-  "description": "XML grammar for tree-sitter",
+  "description": "DTD grammar for tree-sitter",
   "main": "bindings/node",
   "keywords": [
     "parser",
     "lexer"
   ],
   "authors": [
-    "@Dorgnarg"
+    "@Dorgnarg",
+    "mikee.dev"
   ],
   "license": "MIT",
   "dependencies": {
-    "nan": "^2.14.0"
-  },
-  "devDependencies": {
-    "tree-sitter-cli": "^0.17.3"
+    "nan": "^2.17.0"
   },
   "scripts": {
-    "test": "tree-sitter test && tree-sitter parse examples/*.xml --quiet --time",
+    "test": "tree-sitter generate && tree-sitter test && tree-sitter parse examples/*.dtd --quiet --time",
     "test-windows": "tree-sitter test"
   },
   "tree-sitter": [
     {
-      "scope": "text.xml.basic",
+      "scope": "text.dtd.basic",
       "file-types": [
-        "xml"
+        "dtd"
       ],
-      "injection-regex": "xml"
+      "injection-regex": "dtd"
     }
   ]
 }

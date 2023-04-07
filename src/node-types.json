@@ -24,25 +24,6 @@
     "fields": {}
   },
   {
-    "type": "attribute",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "attribute_name",
-          "named": true
-        },
-        {
-          "type": "attribute_value",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
     "type": "attribute_def",
     "named": true,
     "fields": {},
@@ -105,26 +86,6 @@
     }
   },
   {
-    "type": "cdata",
-    "named": true,
-    "fields": {}
-  },
-  {
-    "type": "cdata_sect",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": false,
-      "required": true,
-      "types": [
-        {
-          "type": "cdata",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
     "type": "char_ref",
     "named": true,
     "fields": {}
@@ -152,25 +113,6 @@
     "type": "comment",
     "named": true,
     "fields": {}
-  },
-  {
-    "type": "conditional_sect",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": false,
-      "required": true,
-      "types": [
-        {
-          "type": "ignore_sect",
-          "named": true
-        },
-        {
-          "type": "include_sect",
-          "named": true
-        }
-      ]
-    }
   },
   {
     "type": "content_spec",
@@ -226,17 +168,12 @@
     }
   },
   {
-    "type": "doctype",
-    "named": true,
-    "fields": {}
-  },
-  {
-    "type": "doctype_decl",
+    "type": "document",
     "named": true,
     "fields": {},
     "children": {
       "multiple": true,
-      "required": true,
+      "required": false,
       "types": [
         {
           "type": "attlist_decl",
@@ -247,19 +184,11 @@
           "named": true
         },
         {
-          "type": "doctype",
-          "named": true
-        },
-        {
           "type": "element_decl",
           "named": true
         },
         {
           "type": "entity_decl",
-          "named": true
-        },
-        {
-          "type": "external_id",
           "named": true
         },
         {
@@ -272,80 +201,6 @@
         },
         {
           "type": "processing_instructions",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "document",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": false,
-      "types": [
-        {
-          "type": "comment",
-          "named": true
-        },
-        {
-          "type": "element",
-          "named": true
-        },
-        {
-          "type": "processing_instructions",
-          "named": true
-        },
-        {
-          "type": "prolog",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "element",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "cdata_sect",
-          "named": true
-        },
-        {
-          "type": "comment",
-          "named": true
-        },
-        {
-          "type": "element",
-          "named": true
-        },
-        {
-          "type": "empty_elem_tag",
-          "named": true
-        },
-        {
-          "type": "end_tag",
-          "named": true
-        },
-        {
-          "type": "processing_instructions",
-          "named": true
-        },
-        {
-          "type": "reference",
-          "named": true
-        },
-        {
-          "type": "start_tag",
-          "named": true
-        },
-        {
-          "type": "text",
           "named": true
         }
       ]
@@ -400,55 +255,6 @@
       "types": [
         {
           "type": "cp",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "empty_elem_tag",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "attribute",
-          "named": true
-        },
-        {
-          "type": "tag_name",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "encoding_decl",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": false,
-      "required": true,
-      "types": [
-        {
-          "type": "attribute_value",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "end_tag",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": false,
-      "required": true,
-      "types": [
-        {
-          "type": "tag_name",
           "named": true
         }
       ]
@@ -541,49 +347,6 @@
     }
   },
   {
-    "type": "external_subset_decl",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": false,
-      "required": true,
-      "types": [
-        {
-          "type": "attlist_decl",
-          "named": true
-        },
-        {
-          "type": "comment",
-          "named": true
-        },
-        {
-          "type": "conditional_sect",
-          "named": true
-        },
-        {
-          "type": "element_decl",
-          "named": true
-        },
-        {
-          "type": "entity_decl",
-          "named": true
-        },
-        {
-          "type": "notation_decl",
-          "named": true
-        },
-        {
-          "type": "pe_reference",
-          "named": true
-        },
-        {
-          "type": "processing_instructions",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
     "type": "ge_decl",
     "named": true,
     "fields": {},
@@ -597,65 +360,6 @@
         }
       ]
     }
-  },
-  {
-    "type": "ignore",
-    "named": true,
-    "fields": {}
-  },
-  {
-    "type": "ignore_sect",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": false,
-      "types": [
-        {
-          "type": "ignore_sect_contents",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "ignore_sect_contents",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "ignore",
-          "named": true
-        },
-        {
-          "type": "ignore_sect_contents",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "include_sect",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": false,
-      "types": [
-        {
-          "type": "external_subset_decl",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "langcode",
-    "named": true,
-    "fields": {}
   },
   {
     "type": "mixed",
@@ -795,33 +499,6 @@
     }
   },
   {
-    "type": "prolog",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "comment",
-          "named": true
-        },
-        {
-          "type": "doctype_decl",
-          "named": true
-        },
-        {
-          "type": "processing_instructions",
-          "named": true
-        },
-        {
-          "type": "xml_decl",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
     "type": "pubid_literal",
     "named": true,
     "fields": {},
@@ -871,45 +548,6 @@
     }
   },
   {
-    "type": "standalone_decl",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": false,
-      "required": true,
-      "types": [
-        {
-          "type": "attribute_value",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "start_tag",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "attribute",
-          "named": true
-        },
-        {
-          "type": "tag_name",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "sub_code",
-    "named": true,
-    "fields": {}
-  },
-  {
     "type": "system_literal",
     "named": true,
     "fields": {}
@@ -918,63 +556,6 @@
     "type": "tag_name",
     "named": true,
     "fields": {}
-  },
-  {
-    "type": "text_decl",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "encoding_decl",
-          "named": true
-        },
-        {
-          "type": "version_info",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "version_info",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": false,
-      "required": true,
-      "types": [
-        {
-          "type": "attribute_value",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "xml_decl",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "encoding_decl",
-          "named": true
-        },
-        {
-          "type": "standalone_decl",
-          "named": true
-        },
-        {
-          "type": "version_info",
-          "named": true
-        }
-      ]
-    }
   },
   {
     "type": "\"",
@@ -1053,14 +634,6 @@
     "named": false
   },
   {
-    "type": "/>",
-    "named": false
-  },
-  {
-    "type": "1.",
-    "named": false
-  },
-  {
     "type": ":",
     "named": false
   },
@@ -1069,19 +642,11 @@
     "named": false
   },
   {
-    "type": "<",
-    "named": false
-  },
-  {
     "type": "<!",
     "named": false
   },
   {
     "type": "<!--",
-    "named": false
-  },
-  {
-    "type": "<![",
     "named": false
   },
   {
@@ -1117,14 +682,6 @@
     "named": false
   },
   {
-    "type": "CDATA",
-    "named": false
-  },
-  {
-    "type": "DOCTYPE",
-    "named": false
-  },
-  {
     "type": "ELEMENT",
     "named": false
   },
@@ -1141,10 +698,6 @@
     "named": false
   },
   {
-    "type": "I",
-    "named": false
-  },
-  {
     "type": "ID",
     "named": false
   },
@@ -1154,14 +707,6 @@
   },
   {
     "type": "IDREFS",
-    "named": false
-  },
-  {
-    "type": "IGNORE",
-    "named": false
-  },
-  {
-    "type": "INCLUDE",
     "named": false
   },
   {
@@ -1189,26 +734,6 @@
     "named": false
   },
   {
-    "type": "X",
-    "named": false
-  },
-  {
-    "type": "[",
-    "named": false
-  },
-  {
-    "type": "]",
-    "named": false
-  },
-  {
-    "type": "]]",
-    "named": false
-  },
-  {
-    "type": "]]>",
-    "named": false
-  },
-  {
     "type": "_",
     "named": false
   },
@@ -1217,32 +742,8 @@
     "named": false
   },
   {
-    "type": "i",
-    "named": false
-  },
-  {
     "type": "pubid_char",
     "named": true
-  },
-  {
-    "type": "standalone",
-    "named": false
-  },
-  {
-    "type": "text",
-    "named": true
-  },
-  {
-    "type": "version",
-    "named": false
-  },
-  {
-    "type": "x",
-    "named": false
-  },
-  {
-    "type": "xml",
-    "named": false
   },
   {
     "type": "|",

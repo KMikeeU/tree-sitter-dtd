@@ -3,7 +3,6 @@
 (comment) @comment
 
 [
-    "DOCTYPE"
     "ELEMENT"
     "ATTLIST"
 ] @keyword
@@ -22,17 +21,9 @@
     "PUBLIC"
 ] @constant
 
-(doctype) @module
 (element_name) @module
 
-"xml" @tag
-(tag_name) @tag
 
-[
-    "encoding"
-    "version"
-    "standalone"
-] @attribute
 (attribute_name) @attribute
 
 (system_literal) @string
@@ -40,5 +31,9 @@
 (attribute_value) @string
 
 [
-    "<" ">" "</" "/>" "<?" "?>" "<!" "<![" "[" "]]>"
+    ">"
+    "</"
+    "<?"
+    "?>"
+    "<!"
 ] @punctuation.bracket
